@@ -25,9 +25,9 @@
         </nav>
 
         <header>
-            <div class="header-image" style="background-image: url('image/mission2.jpg')">
+            <div id="image" class="header-image" style="background-image: url('image/mission2.jpg')">
                 <div class="header-image-information header-text">
-                    <h2>Mission: Impossible – Dead Reckoning Part One</h2>
+                    <h2 id="header-movie-name">Mission: Impossible – Dead Reckoning Part One</h2>
                     <h3 class="header-crown">97%</h3>
                     <iframe class="header-video" src="https://www.youtube.com/embed/HurjfO_TDlQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
                     </iframe>
@@ -42,37 +42,37 @@
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/mission.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>97%</a3>
+                            <a3 class="main-crown">97%</a3>
                             <br>
-                            <a2>Mission:Impossible-Dead Reckoning</a2></div>
+                            <a2 class="main-name">Mission:Impossible-Dead Reckoning</a2></div>
                     </div>
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/freedom.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>74%</a3>
+                            <a3 class="main-crown">74%</a3>
                             <br>
-                            <a2>Sound of Freedom</a2></div>
+                            <a2 class="main-name">Sound of Freedom</a2></div>
                     </div>
                     <div class="main-rank-movie">
-                        <div class="main-rank-image" style="background-image: url('image/reddoor.png')"></div>
+                        <div class="main-rank-image" style="background-image: url('image/reddoor.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>37%</a3>
+                            <a3 class="main-crown">37%</a3>
                             <br>
-                            <a2>Insidious: The Red Door</a2></div>
+                            <a2 class="main-name">Insidious: The Red Door</a2></div>
                     </div>
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/jones.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>69%</a3>
+                            <a3 class="main-crown">69%</a3>
                             <br>
-                            <a2>Indiana Jones and Dial of Destiny</a2></div>
+                            <a2 class="main-name">Indiana Jones and Dial of Destiny</a2></div>
                     </div>
                     <div class="main-rank-movie">
-                        <div class="main-rank-image" style="background-image: url('image/elemental.jpeg')"></div>
+                        <div class="main-rank-image" style="background-image: url('image/elemental.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>74%</a3>
+                            <a3 class="main-crown">74%</a3>
                             <br>
-                            <a2>Elemental</a2></div>
+                            <a2 class="main-name">Elemental</a2></div>
                     </div>
                     
                 </div>
@@ -83,37 +83,37 @@
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/justified.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>93%</a3>
+                            <a3 class="main-crown">93%</a3>
                             <br>
-                            <a2>Justified:City Primeval</a2></div>
+                            <a2 class="main-name">Justified:City Primeval</a2></div>
                     </div>
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/secret.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>59%</a3>
+                            <a3 class="main-crown">59%</a3>
                             <br>
-                            <a2>Secret Invasion</a2></div>
+                            <a2 class="main-name">Secret Invasion</a2></div>
                     </div>
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/the bear.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>99%</a3>
+                            <a3 class="main-crown">99%</a3>
                             <br>
-                            <a2>The Bear</a2></div>
+                            <a2 class="main-name">The Bear</a2></div>
                     </div>
                     <div class="main-rank-movie">
-                        <div class="main-rank-image" style="background-image: url('image/foundation.webp')"></div>
+                        <div class="main-rank-image" style="background-image: url('image/foundation.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>86%</a3>
+                            <a3 class="main-crown">86%</a3>
                             <br>
-                            <a2>Foundation</a2></div>
+                            <a2 class="main-name">Foundation</a2></div>
                     </div>
                     <div class="main-rank-movie">
                         <div class="main-rank-image" style="background-image: url('image/crowded.jpg')"></div>
                         <div class="main-rank-name">
-                            <a3>30%</a3>
+                            <a3 class="main-crown">30%</a3>
                             <br>
-                            <a2>The Crowded Room</a2></div>
+                            <a2 class="main-name">The Crowded Room</a2></div>
                     </div>
                     
                 </div>
@@ -159,5 +159,23 @@
             
         </footer>
     </div>
+    <script>
+        const mainimg = document.getElementsByClassName("main-rank-image");
+        const mainname=document.getElementsByClassName("main-name");
+        const maincrown=document.getElementsByClassName("main-crown");
+        const headercrown=document.getElementsByClassName("header-crown");
+        const headername=document.getElementById("header-movie-name");
+        const headerimg = document.getElementById("image");
+        for(let i=0;i<mainimg.length;i++){
+            mainimg[i].addEventListener("click", () => {
+                console.log("누름");
+                imgsrc=mainimg[i].style.backgroundImage;
+                imgname=imgsrc.slice(0,imgsrc.length-6)+"2"+imgsrc.slice(imgsrc.length-6,imgsrc.length);
+                headerimg.style.backgroundImage=imgname;
+                headername.innerHTML=mainname[i].innerHTML;
+                headercrown[0].innerHTML=maincrown[i].innerHTML;
+            });
+        }
+        </script>
 </body>
 </html>
