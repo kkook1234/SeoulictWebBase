@@ -1,5 +1,4 @@
 body{
-   /* background-color: gray; */
     display: flex;
     justify-content:center;
     background-color: #F2F2F2;
@@ -8,7 +7,7 @@ body{
     background-color: white;
     min-width:1300px;
     max-width:1000px;
-    /* background-color: #F2F2F2;; */
+
 
 }
 a2{
@@ -201,7 +200,6 @@ aside{
     width:100%;
     height:83%;
     border-radius: 10px;
-    /* frameborder="0"; allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen */
 }
 .aside-block-name{
     width:100%;
@@ -216,7 +214,6 @@ footer{
 .footer-top{
     height:50%;
     width:100%;
-    /* background-color: orange; */
     position:relative;
     
 }
