@@ -16,7 +16,21 @@
     <div class="body2">
         <nav class="nav-container">
             <div class="nav-logo"><a>Movie Ranking</a></div>
-            <input id="nav-search" class="nav-search" type="text" onkeyup="if(window.event.keyCode==13){test()}" placeholder="Search movies,TV">
+            <div class="nav-search-block">
+                <input id="nav-search" class="nav-search" type="text" onkeyup="if(window.event.keyCode==13){search()}else{filter()}" placeholder="Search movies,TV">
+                <div class="nav-search-container">
+                    <div class="nav-search-item">Mission: Impossible – Dead Reckoning Part One</div>
+                    <div class="nav-search-item">Sound of Freedom</div>
+                    <div class="nav-search-item">Insidious: The Red Door</div>
+                    <div class="nav-search-item">Indiana Jones and Dial of Destiny</div>
+                    <div class="nav-search-item">Elemental</div>
+                    <div class="nav-search-item">Justified:City Primeval</div>
+                    <div class="nav-search-item">Secret Invasion</div>
+                    <div class="nav-search-item">The Bear</div>
+                    <div class="nav-search-item">Foundation</div>
+                    <div class="nav-search-item">The Crowded Room</div>
+                </div>
+            </div>
             <div class="nav-menubar"> 
                 <a class="nav-menu" href="nav-menu">MOVIES</a>
                 <a class="nav-menu" href="nav-menu">TVSHOWS</a>
@@ -172,7 +186,7 @@
         const headercrown=document.getElementsByClassName("header-crown");
         const headername=document.getElementById("header-movie-name");
         const headerimg = document.getElementById("image");
-        function changeheader(i){
+        function changeheader(i){//header 변경
                 imgsrc=mainimg[i].style.backgroundImage;
                 imgname=imgsrc.slice(0,imgsrc.length-6)+"2"+imgsrc.slice(imgsrc.length-6,imgsrc.length);
                 headerimg.style.backgroundImage=imgname;
@@ -184,14 +198,52 @@
                 changeheader(i)
             });
         }
-        
-        function test(){
-            const name = document.getElementById('nav-search').value;
-            for(let i=0;i<mainimg.length;i++){
-              if(mainname[i].innerHTML==name){
-                changeheader(i);
-              } 
-            };
+
+        function search(){//입력후 엔터 시 해당 영화,방송 찾기
+            const name = document.getElementById('nav-search').value.toUpperCase().replace(/ /g,"");
+            if(name==""){
+                alert("검색어를 입력해주세요.");
+            }
+            else{
+                let notitle=false;
+                for(let i=0;i<mainimg.length;i++){
+                    const img_name=mainname[i].innerHTML.toUpperCase().replace(/ /g,"");
+                    if(img_name==name){
+                        changeheader(i);
+                        notitle=true;
+                        break;
+
+                    }
+                    
+                }
+                console.log(notitle);
+                if(notitle==false){
+                    alert("해당 제목이 존재하지 않습니다.");
+                }
+                notitle=false;
+            }
+        }
+
+        function filter(){//키보드 입력 시 해당 문자가 들어가는 영화, 방송 필터링
+            const name = document.getElementById('nav-search').value.toUpperCase().replace(/ /g,"");
+            const searchbox=document.getElementsByClassName('nav-search-container');
+            const searchtitle=document.getElementsByClassName('nav-search-item');
+            if(name==""){
+                searchbox[0].style.display="none";
+            }
+            else{
+                searchbox[0].style.display="block";
+                for(let i=0;i<searchtitle.length;i++){
+                    const titlename=searchtitle[i].innerHTML.toUpperCase().replace(/ /g,"");
+                    if(titlename.indexOf(name)>-1){
+                        searchtitle[i].style.display="block";
+                    }
+                    else{
+                        searchtitle[i].style.display="none";
+                    }
+                    
+                }
+            }
         }
     </script>
 </body>
