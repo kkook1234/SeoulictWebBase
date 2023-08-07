@@ -69,7 +69,7 @@
         <nav class="nav-container">
             <div class="nav-logo"><a href="/">Movie Ranking</a></div>
             <div class="nav-search-block">
-                <input id="nav-search" class="nav-search" type="text" onkeyup="if(window.event.keyCode==13){search()}else{filter()}" placeholder="Search movies,TV">
+                <input id="nav-search" class="nav-search" type="text" onkeyup="if(window.event.keyCode==13){search()}else if(window.event.keyCode==40){choosedown()}else if(window.event.keyCode==38){chooseup()}else{filter()}" placeholder="Search movies,TV">
                 <div class="nav-search-container">
                     {% for all in all %}
                         <div class="nav-search-item">{{ all['name'] }}</div>
@@ -139,7 +139,13 @@
         const mainimg = document.getElementsByClassName("main-rank-image");
         const mainname=document.getElementsByClassName("main-name");
         //모달창 열고 닫기
-        closeModalBtn.addEventListener("click", () => {
+        $(document).keydown(function(event) {//esc로 모달 닫기
+            if ( event.keyCode == 27 || event.which == 27 ) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto"; 
+            }
+        }); 
+        closeModalBtn.addEventListener("click", () => {//버튼 클릭으로 모달 닫기
             modal.style.display = "none";
             document.body.style.overflow = "auto"; 
         });
@@ -202,6 +208,7 @@
                         modal.style.display="block";
                         document.body.style.overflow = "hidden";//스크롤 제거
                         submitForm(all1);
+                        searchnone();
                         notitle=true;
                         break;
                     }
@@ -214,12 +221,14 @@
                 notitle=false;
             }
         }
+        var blockcheck=[];
         function filter(){//키보드 입력 시 해당 문자가 들어가는 영화, 방송 필터링
             const name = document.getElementById('nav-search').value.toUpperCase().replace(/ /g,"");
             const searchbox=document.getElementsByClassName('nav-search-container');
             const searchtitle=document.getElementsByClassName('nav-search-item');
             if(name==""){
                 searchbox[0].style.display="none";
+                searchnone();
             }
             else{
                 searchbox[0].style.display="block";
@@ -227,13 +236,57 @@
                     const titlename=searchtitle[i].innerHTML.toUpperCase().replace(/ /g,"");
                     if(titlename.indexOf(name)>-1){
                         searchtitle[i].style.display="block";
+                        if(blockcheck.indexOf(i)==-1){
+                        blockcheck.push(i);}
                     }
                     else{
                         searchtitle[i].style.display="none";
+
+                        if(blockcheck.indexOf(i)!=-1){
+                        blockcheck.splice(blockcheck.indexOf(i),1);}
                     }
                     
                 }
             }
+        }
+        var downkey=-1;
+        function choosedown(){
+            const name = document.getElementById('nav-search').value;
+            const searchtitle=document.getElementsByClassName('nav-search-item');
+            if(downkey<blockcheck.length){
+                downkey+=1;
+                document.getElementById('nav-search').value=searchtitle[blockcheck[downkey]].innerHTML;
+                
+            }
+            else{
+                downkey=blockcheck.length-1;
+                document.getElementById('nav-search').value=searchtitle[blockcheck[downkey]].innerHTML;
+            }
+            
+        }
+        function chooseup(){
+            
+            const name = document.getElementById('nav-search').value;
+            const searchtitle=document.getElementsByClassName('nav-search-item');
+            if(downkey>0){
+                downkey-=1;    
+                document.getElementById('nav-search').value=searchtitle[blockcheck[downkey]].innerHTML;
+            }
+            else{
+                document.getElementById('nav-search').value=searchtitle[blockcheck[downkey]].innerHTML;
+            }
+            
+        }
+        function searchnone(){
+            document.getElementById('nav-search').value="";
+            downkey=-1;
+            const searchbox=document.getElementsByClassName('nav-search-container');
+            const searchtitle=document.getElementsByClassName('nav-search-item');
+            searchbox[0].style.display="none";
+            for(let i=0;i<searchtitle.length;i++){
+                searchtitle[i].style.none="none";
+            }
+            blockcheck=[];
         }
     </script>
     

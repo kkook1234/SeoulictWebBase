@@ -120,14 +120,32 @@ def tvshows():
         drama_poster_img = db_cursor.fetchall()
     return render_template('tvshows.html', all=all_rating,dramas=dramas,drama_poster_img=drama_poster_img)
 
+@app.route('/tvshows.html/modal', methods=['POST'])
+def modal_tvshow():
+    data=request.get_json()['data']
+   
+    data1="SELECT rt.name, rt.rating,date_format(rt.date,'%M %D, %Y') as date, img.poster_image,img.background_image,vd.video_title,vd.video_link FROM rating rt join image img on rt.id=img.id join video vd on img.id=vd.id where name='"+data+"';"
+    
+    db_all_rating = pymysql.connect(host='localhost', user='root',
+            password='1234', database='myweb3',
+            autocommit=True, cursorclass=pymysql.cursors.DictCursor)
+    with db_all_rating:
+        db_cursor = db_all_rating.cursor()
+        db_cursor.execute(data1)
+        all_rating = db_cursor.fetchall()
+      
+    return jsonify(all_rating)
+
 @app.route('/tvshows.html/sort', methods=['POST'])
 def drama_sort():
     sort = request.form['sort']
-
+    print(sort)
     db_all_rating = pymysql.connect(host='localhost', user='root',
             password='1234', database='myweb3',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
+    db_cursor.execute("SELECT * FROM rating;")
+    all_rating = db_cursor.fetchall()
 
     if sort=='date':#날짜순으로 정렬
        db_cursor.execute("select * from rating where movie_or_drama='drama'order by date desc;")
@@ -140,14 +158,14 @@ def drama_sort():
        dramas = db_cursor.fetchall()
        db_cursor.execute("select img.poster_image from rating rt join image img on rt.id=img.id where rt.movie_or_drama='drama'order by name asc;")
        drama_poster_img = db_cursor.fetchall()
-
+    
     else: #평점순으로 정렬
        db_cursor.execute("select * from rating where movie_or_drama='drama'order by rating desc;")
        dramas = db_cursor.fetchall()
        db_cursor.execute("select img.poster_image from rating rt join image img on rt.id=img.id where rt.movie_or_drama='drama'order by rating desc;")
        drama_poster_img = db_cursor.fetchall()
-
-    return render_template('tvshows.html', dramas=dramas, drama_poster_img=drama_poster_img)
+    print(dramas)
+    return render_template('tvshows.html', all=all_rating, dramas=dramas, drama_poster_img=drama_poster_img)
 
 @app.route('/videos.html')
 def videos():
