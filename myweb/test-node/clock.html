@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock-test</title>
+    
+    <style>
+        @font-face {
+            font-family: 'LAB디지털';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/LAB디지털.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+       
+        .clock-box{
+            margin: 0;
+            height: 100vh;
+            color:#b2fefa;
+            background: radial-gradient( #ff33ff, #6666ff);
+            font-family: 'LAB디지털';
+            box-sizing: border-box;
+            font-size: 32px;
+        }
+        .clock-box-blur{
+            width:100%;
+            height:100%;
+
+        }
+        .time-box{
+            width:100%;
+            height:90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+
+        }
+        .time{
+            min-width: 250px;
+            min-height:250px;
+            margin: 0 auto;
+            text-align: center;
+            border: 1px solid white;
+            border-radius: 50%;    
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 0px 20px 10px white;
+            background:radial-gradient(#ffe6ff,#ff66ff);
+        }
+       
+        .today-box{
+            width:100%;
+            height:10%;
+            
+            display: flex;
+            justify-content: center;
+           
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="clock-box">
+        <div class="clock-box-blur">
+            <div class="time-box">
+                <div class="time">
+                </div>  
+            </div>
+            <div class="today-box">
+                <div class="today">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function time(){
+            let arr=[];
+            let now=new Date();
+            arr.push(now.getFullYear());
+            arr.push(now.getMonth()+1);
+            arr.push(now.getDate());
+            arr.push(now.getHours());
+            arr.push(now.getMinutes());
+            arr.push(now.getSeconds());
+            for(i=1;i<6;i++){
+                arr[i]=arr[i]<10?`0${arr[i]}`:arr[i];    
+            }
+            document.getElementsByClassName('today')[0].innerHTML=`${arr[0]}년 ${arr[1]}월 ${arr[2]}일`;
+            document.getElementsByClassName('time')[0].textContent=`${arr[3]}:${arr[4]}:${arr[5]}`;
+        }
+        time();
+        setInterval(time,1000);
+    </script>
+</body>
+</html>

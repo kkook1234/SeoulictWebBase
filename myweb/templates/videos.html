@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Layout</title>
+    <link href="/static/videos_style.css" rel="stylesheet" />
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Oswald:wght@300&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+ 
+    </script>
+    <div class="body2">
+        <nav class="nav-container">
+            <div class="nav-logo"><a href="/">Movie Ranking</a></div>
+            <div class="nav-search-block">
+                <input id="nav-search" class="nav-search" type="text" onkeyup="if(window.event.keyCode==13){search()}else{filter()}" placeholder="Search movies,TV">
+                <div class="nav-search-container">
+                    {% for all in all %}
+                        <div class="nav-search-item">{{ all['name'] }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="nav-menubar"> 
+                <a class="nav-menu" href="/movies.html" >MOVIES</a>
+                <a class="nav-menu" href="/tvshows.html">TVSHOWS</a>
+                <a class="nav-menu" href="/videos.html">VIDEOS</a>
+            </div>
+        </nav>
+        <header>
+            <div class="header-text">Videos</div>
+            <div class="header-select">
+                <form id="sortform" action="/videos.html/sort" method="POST">
+                    <select id="sort" name="sort">
+                    <option disabled selected>SORT</option>
+                    <option value="date">NEWEST</option>
+                    <option value="name">A-Z</option>
+                    <option value="ranking">RATING</option>
+                    </select>
+                    
+                </form>
+            </div>
+            <div class="header-line"></div>
+        </header>
+        <aside>
+            {%for i in range(0,(videos|length),2)%}
+            
+            <div class="aside-block">
+                <div class="aside-block-col">
+                    <iframe class="aside-block-video" src="{{videos[i]['video_link']}}?controls=2&showinfo=0&modestbranding=1" frameborder="0" ></iframe>
+                    <div class="aside-block-name">
+                        <a2>{{videos[i]['video_title']}}</a2>
+                    </div>
+                </div>
+                <div class="aside-block-col"><iframe class="aside-block-video" src="{{videos[i+1]['video_link']}}?controls=2&showinfo=0&modestbranding=1" frameborder="0" ></iframe>
+                    <div class="aside-block-name">
+                        <a2>{{videos[i+1]['video_title']}}</a2>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </aside>
+        <footer>
+            <div class="footer-top">
+                <hr class="footer-top-line">
+            </div>
+            <div class="footer-text">
+                <div class="footer-text-a">
+                    <a >1234@naver.com</a>
+                    <br>
+                    <a >010-1111-2222</a>
+                </div>
+               
+                <h2 >Movie Ranking</h2>
+            </div>
+            
+        </footer>
+    </div>
+    <script>
+         document.getElementById("sort").addEventListener("change", function() {
+                document.getElementById("sortform").submit();
+
+            });
+    </script>
+    
+</body>
+</html>
