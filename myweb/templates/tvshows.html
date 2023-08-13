@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>HTML Layout</title>
+    <title>tvshows</title>
     <link href="/static/tvshows_style.css" rel="stylesheet" />
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,11 +52,12 @@
                     <a style="margin-left:10px;font-size: 20px;">Review</a>
                     <br>
                     <div class="modal-comment-block">
+                        <div class="modal-comment-box">
                         {%for i in range(5)%}
-                        <a style="font-size: 30px;font-weight: 600;">tt stern-enzi </a><a style="font-size: 30px;">This is going to meet all of the expectations.</a><br>
-                        <div class="header-line" style="margin-bottom:5px; background-color: gray; height:1px;"></div>
+                        <div class="review-box"><div class="nickname"><a class="review-nickname" style="font-size: 30px;font-weight: 600;"></a></div ><div class="review"><a class="review-content"style="font-size: 30px;"></a></div></div>
                         {%endfor%}
-                        <input type="text" class="write-review" value="Write a review">
+                        </div>
+                    <input type="text" name="write" class="write-review" placeholder="Write a review" onkeydown="if(event.keyCode==13){addreview()}">
                     </div>
                    
 
@@ -76,9 +77,20 @@
                 </div>
             </div>
             <div class="nav-menubar"> 
-                <a class="nav-menu" href="/movies.html" >MOVIES</a>
-                <a class="nav-menu" href="/tvshows.html">TVSHOWS</a>
-                <a class="nav-menu" href="/videos.html">VIDEOS</a>
+                <div class="login-box">
+                    {%if login_nickname ==""or login_nickname==none%}
+                    <a class="login-box2" href="/signup.html" >signup</a>
+                    <a class="login-box2" href="/login.html">Log in</a>
+                    {%else%}
+                    <a class="login-box2" href="/login.html">welcome! {{login_nickname}}</a>
+                    <a class="login-box2" onClick="logout()" style="cursor:pointer;" >Log out</a>
+                    {%endif%}
+                </div>
+                <div class="menu-box">
+                    <a class="nav-menu" href="/movies.html" >MOVIES</a>
+                    <a class="nav-menu" href="/tvshows.html">TVSHOWS</a>
+                    <a class="nav-menu" href="/videos.html">VIDEOS</a>
+                </div>
             </div>
         </nav>
         <header>
@@ -130,6 +142,20 @@
         </footer>
     </div>
     <script>
+        console.log(document.cookie);
+        function logout(){
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+            }
+            location.reload();
+            console.log(document.cookie);
+        }    
+        
          document.getElementById("sort").addEventListener("change", function() {
                 document.getElementById("sortform").submit();
 
@@ -139,6 +165,30 @@
         const modal_content = document.getElementsByClassName("modal-content");
         const mainimg = document.getElementsByClassName("main-rank-image");
         const mainname=document.getElementsByClassName("main-name");
+        function addreview() {
+          if(document.cookie === ''){
+            alert("로그인 후 작성해주세요.");
+            }
+          else{
+          const review=document.getElementsByClassName("write-review")[0].value;
+          const movie_name=document.getElementById("modal-movie-name").innerHTML 
+          
+          $.ajax({
+                type: 'POST',
+                url: '/write',
+                data: JSON.stringify({ review: review, movie_name: movie_name }),
+                contentType: 'application/json',
+                success: function(response) {
+                    changereview(response.review);
+                    document.getElementsByClassName("write-review")[0].value = '';
+                },
+                error: function(xhr, status, error) {
+                 
+                    console.error(error);
+                }
+            });}
+        }
+        
         //모달창 열고 닫기
         $(document).keydown(function(event) {//esc로 모달 닫기
             if ( event.keyCode == 27 || event.which == 27 ) {
@@ -167,7 +217,22 @@
                 data: JSON.stringify({data:modaldata}),
                 contentType: 'application/json',
                 success: function(response) {
-                    changemodal(response);
+                    changemodal(response.all_rating);
+                    changereview(response.review);
+                    console.log(response.review);
+                },
+                error: function(xhr, status, error) {
+                    // 에러 처리를 수행합니다.
+                    console.error(error);
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/search', // 실제 서버의 URL로 변경해야 합니다.
+                data: JSON.stringify({data:modaldata}),
+                contentType: 'application/json',
+                success: function(response) {
+                    
 
                 },
                 error: function(xhr, status, error) {
@@ -177,6 +242,20 @@
             });
            
         }
+        function changereview(response){
+            review_nickname=document.getElementsByClassName("review-nickname");
+            review_content=document.getElementsByClassName("review-content");
+            for(let i=0;i<5;i++){
+                    if(i<=response.length-1){
+                    review_nickname[i].innerHTML=response[i]['nickname']+"   ";
+                    review_content[i].innerHTML=response[i]['comment']+"   ";
+                    }
+                    else{
+                        review_nickname[i].innerHTML="";
+                        review_content[i].innerHTML="";
+                    }
+                }
+            }
         function changemodal(response){
             document.getElementById("modal-movie-name").innerHTML=response[0]['name'];
             document.getElementById("modal-movie-crown").innerHTML=response[0]['rating'];

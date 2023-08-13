@@ -3,17 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>HTML Layout</title>
+    <title>index</title>
     <link href="/static/index_style.css" rel="stylesheet" />
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Oswald:wght@300&display=swap" rel="stylesheet">
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-
+    <div class="searchranking-box">
+        <div class="searchranking-a"><a>사이트 검색 순위</a></div>
+        {% for i in range(searchranking|length)%}
+            <div class="searchranking-a"><a>{{i+1}}. {{searchranking[i]['name']}}</a></div>
+        {% endfor %}
+    </div>
     <div class="body2">
         <nav class="nav-container">
             <div class="nav-logo"><a href="/">Movie Ranking</a></div>
@@ -26,9 +31,20 @@
                 </div>
             </div>
             <div class="nav-menubar"> 
-                <a class="nav-menu" href="/movies.html" >MOVIES</a>
-                <a class="nav-menu" href="/tvshows.html">TVSHOWS</a>
-                <a class="nav-menu" href="/videos.html">VIDEOS</a>
+                <div class="login-box">
+                    {%if login_nickname ==""or login_nickname==none%}
+                    <a class="login-box2" href="/signup.html" >signup</a>
+                    <a class="login-box2" href="/login.html">Log in</a>
+                    {%else%}
+                    <a class="login-box2" href="/login.html">welcome! {{login_nickname}}</a>
+                    <a class="login-box2" onClick="logout()" style="cursor:pointer;" >Log out</a>
+                    {%endif%}
+                </div>
+                <div class="menu-box">
+                    <a class="nav-menu" href="/movies.html" >MOVIES</a>
+                    <a class="nav-menu" href="/tvshows.html">TVSHOWS</a>
+                    <a class="nav-menu" href="/videos.html">VIDEOS</a>
+                </div>
             </div>
         </nav>
 
@@ -49,7 +65,7 @@
                 <div class="main-rank">
                     {% for i in range(movies|length) %} 
                     <div class="main-rank-movie">
-                        <div class="main-rank-image" style="background-image: url({{movie_poster_img[i]['poster_image']}})"></div>
+                        <div class="main-rank-image" style="background-image: url({{movie_poster_img[i].poster_image}})"></div>
                         <div class="main-rank-name">
                             <a3 class="main-crown">{{movies[i]['rating']}}%</a3>
                             <br>
@@ -64,7 +80,7 @@
                 <div class="main-rank">
                     {% for i in range(dramas|length) %} 
                     <div class="main-rank-movie">
-                        <div class="main-rank-image" style="background-image: url({{drama_poster_img[i]['poster_image']}})"></div>
+                        <div class="main-rank-image" style="background-image: url({{drama_poster_img[i].poster_image}})"></div>
                         <div class="main-rank-name">
                             <a3 class="main-crown">{{dramas[i]['rating']}}%</a3>
                             <br>
@@ -121,6 +137,19 @@
         </footer>
     </div>
     <script>
+        console.log(document.cookie);
+        function logout(){
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
+            }
+            location.reload();
+            console.log(document.cookie);
+        }    
         
         const mainimg = document.getElementsByClassName("main-rank-image");
         const mainname=document.getElementsByClassName("main-name");
@@ -150,18 +179,40 @@
                 
             });
         }
+
+        function submitForm(modaldata){
+
+        $.ajax({
+            type: 'POST',
+            url: '/search', // 실제 서버의 URL로 변경해야 합니다.
+            data: JSON.stringify({data:modaldata}),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log(response);
+                
+            },
+            error: function(xhr, status, error) {
+                // 에러 처리를 수행합니다.
+                console.error(error);
+            }
+        });
+       
+    }
       
         function search(){//입력후 엔터 시 해당 영화,방송 찾기
             const name = document.getElementById('nav-search').value.toUpperCase().replace(/ /g,"");
+            window.all = {{ all | tojson }};
             if(name==""){
                 alert("검색어를 입력해주세요.");
             }
             else{
                 let notitle=false;
                 for(let i=0;i<mainimg.length;i++){
+                    const all1=all[i]['name'];
                     const img_name=mainname[i].innerHTML.toUpperCase().replace(/ /g,"");
                     if(img_name==name){
                         changeheader(i);
+                        submitForm(all1)
                         searchnone();
                         notitle=true;
                         break;
@@ -245,6 +296,9 @@
             }
             blockcheck=[];
         }
+      
+
+        
     </script>
 </body>
 </html>
