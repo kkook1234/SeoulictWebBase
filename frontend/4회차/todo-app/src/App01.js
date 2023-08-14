@@ -8,12 +8,12 @@ function App(){
     const [todate,setdate]=useState("")
 
     const handleSubmit=(dowhat)=>{
-        changedate();
+        changedate();//오늘 날짜 가져오기
         setTodo([...todo,//기존값은 그대로 넣어줌
             {dowhat:dowhat,
-            doId:todoId,
-            doDate:todate,
-            doDone:false}
+            doId:todoId,//id
+            doDate:todate,//추가한 날짜
+            doDone:false}//할일을 실행하였나 여부
         ])
         setTodoId(todoId+1)
         
