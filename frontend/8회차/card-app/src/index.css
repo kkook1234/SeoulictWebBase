@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'GowunDodum-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'EliceDigitalBaeum_Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EliceDigitalBaeum_Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+*{
+  font-family: 'GowunDodum-Regular';
+}
+
+body {
+  background-color:white;
+  height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* background-image: url('../public/image/slamdunk2.png');
+  background-repeat: no-repeat;  
+   background-size: contain;  */
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#root{
+  padding-top:200px;
+  min-width:2000px;
+  max-width:2000px;
+  width:100%;
+  height:100vh;
+  background-image: url('../public/image/slamdunk2.png');
+  background-position:center bottom;
+  background-repeat: no-repeat;  
+  background-size: contain; 
+  display: flex;
+  justify-content: center;
+  
+}
+/* .title{
+  font-family: 'EliceDigitalBaeum_Bold';
+  font-size:30px;
+  text-align: center;
+  color:white;
+  text-shadow: 
+  -1px -1px 0 orange,
+   1px -1px 0 orange,
+  -1px  1px 0 orange,
+   1px  1px 0 orange,
+  -2px -2px 0 white,
+   2px -2px 0 white,
+  -2px  2px 0 white,
+   2px  2px 0 white;
+} */
+.num{
+  font-family: 'EliceDigitalBaeum_Bold';
+  font-size:100px;
+  text-align: center;
+  color:white;
+  text-shadow: 
+  -1px -1px 0 orange,
+   1px -1px 0 orange,
+  -1px  1px 0 orange,
+   1px  1px 0 orange,
+  -2px -2px 0 white,
+   2px -2px 0 white,
+  -2px  2px 0 white,
+   2px  2px 0 white;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
