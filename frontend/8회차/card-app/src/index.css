@@ -10,8 +10,9 @@
   font-weight: 700;
   font-style: normal;
 }
+
 *{
-  font-family: 'GowunDodum-Regular';
+  font-family: 'EliceDigitalBaeum_Bold';
 }
 
 body {
@@ -45,21 +46,15 @@ body {
   justify-content: center;
   
 }
-/* .title{
+.title{
+
   font-family: 'EliceDigitalBaeum_Bold';
+
   font-size:30px;
   text-align: center;
   color:white;
-  text-shadow: 
-  -1px -1px 0 orange,
-   1px -1px 0 orange,
-  -1px  1px 0 orange,
-   1px  1px 0 orange,
-  -2px -2px 0 white,
-   2px -2px 0 white,
-  -2px  2px 0 white,
-   2px  2px 0 white;
-} */
+
+}
 .num{
   font-family: 'EliceDigitalBaeum_Bold';
   font-size:100px;
@@ -79,3 +74,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

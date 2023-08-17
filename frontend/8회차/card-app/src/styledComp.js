@@ -15,6 +15,15 @@ export const Menu = styled.div`
   align-items: center;  
   margin-bottom:80px;
 `
+export const Video = styled.div`
+  width:100%; 
+  height:500px;
+  display:flex;
+  justify-content:center;
+  align-items:center
+
+
+`
 
 export const Items = styled.div`
   display: flex;
@@ -34,9 +43,6 @@ export const Image = styled.div`
   background-repeat: no-repeat;
   background-size: cover; 
   transition: height 0.3s ease;
-//   @media all and (max-width: 500px){
-//     background-size: 100% 100%;
-//   }
 `
 export const Item = styled.div`
   
@@ -55,21 +61,41 @@ export const Item = styled.div`
         
     }
   }
-//   @media all and (max-width: 800px){
-//     width: 46%;
-//   }
-//   @media all and (max-width: 500px){
-//     width: 98%;
-//   }
 `
 
 
-export const ColorBox = styled.div`
-  height: 250px; 
-  background-color: ${props => props.color};
-  background-repeat: no-repeat;
-  background-size: cover;
-//   @media all and (max-width: 500px){
-//     background-size: 100% 100%;
-//   }
+
+export const Detailbox = styled.div`
+  width:50%;
+  height:500px;
+  padding-top:20; 
+  color: black;
+  border: 1px solid orange;
+ 
+`
+export const Backbutton = styled.button`
+margin-top:10px;
+width:100px;
+height:30px;
+border:none;
+background-color:white;
+color:orange;
+font-size:20px;
+
+
+`
+export const DetailImage = styled.div`
+
+background-image: url(${props => props.imagepath});
+width:300px;
+height:450px;
+background-repeat: no-repeat;
+background-size: contain;
+`
+export const DetailContent = styled.div`
+margin-left:50px;
+width:500px;
+height:450px;
+font-size:20px;
+
 `
