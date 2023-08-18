@@ -71,10 +71,14 @@ export const Detailbox = styled.div`
   padding-top:20; 
   color: black;
   border: 1px solid orange;
+  border-radius:20px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  background-color:white;
  
 `
 export const Backbutton = styled.button`
 margin-top:10px;
+margin-left:10px;
 width:100px;
 height:30px;
 border:none;
