@@ -3,11 +3,11 @@ import React,{useEffect,useState} from "react";
 const UnmoutTest=()=>{
     useEffect(()=>{
         console.log("Mount!");
-        
+
         return()=>{
             console.log("Unmount!")
         }
-    },[])
+    },[]);
     return <div>unmount Testing Component</div>
 }
 
