@@ -10,8 +10,8 @@ def index():
     login_id=request.cookies.get('id')
     login_nickname=request.cookies.get('nickname')
     login_num=request.cookies.get('num')
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     with db_all_rating:
         db_cursor = db_all_rating.cursor()
@@ -51,8 +51,8 @@ def movies():
     login_nickname=request.cookies.get('nickname')
     login_num=request.cookies.get('num')
 
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     with db_all_rating:
         db_cursor = db_all_rating.cursor()
@@ -77,8 +77,8 @@ def modal2():
     data1="SELECT rt.name, rt.rating,date_format(rt.date,'%M %D, %Y') as date, img.poster_image,img.background_image,vd.video_title,vd.video_link FROM rating rt join image img on rt.id=img.id join video vd on img.id=vd.id where name='"+data+"';"
     
 
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
 
     with db_all_rating:
@@ -100,9 +100,11 @@ def modal2():
 @app.route('/movies.html/sort', methods=['POST'])
 def movie_sort():
     sort = request.form['sort']
-
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    login_id=request.cookies.get('id')
+    login_nickname=request.cookies.get('nickname')
+    login_num=request.cookies.get('num')
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute("SELECT * FROM rating;")
@@ -125,16 +127,16 @@ def movie_sort():
        movies = db_cursor.fetchall()
        db_cursor.execute("select img.poster_image from rating rt join image img on rt.id=img.id where rt.movie_or_drama='movie'order by rating desc;")
        movie_poster_img = db_cursor.fetchall()
-    return redirect(url_for('movies',all=all_rating,movies=movies,movie_poster_img=movie_poster_img))
-    #return render_template('movies.html', all=all_rating,movies=movies,movie_poster_img=movie_poster_img,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
+    
+    return render_template('movies.html', all=all_rating,movies=movies,movie_poster_img=movie_poster_img,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
 
 @app.route('/tvshows.html')
 def tvshows():
     login_id=request.cookies.get('id')
     login_nickname=request.cookies.get('nickname')
     login_num=request.cookies.get('num')
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     with db_all_rating:
         db_cursor = db_all_rating.cursor()
@@ -154,8 +156,8 @@ def modal_tvshow():
    
     data1="SELECT rt.name, rt.rating,date_format(rt.date,'%M %D, %Y') as date, img.poster_image,img.background_image,vd.video_title,vd.video_link FROM rating rt join image img on rt.id=img.id join video vd on img.id=vd.id where name='"+data+"';"
     
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     with db_all_rating:
         db_cursor = db_all_rating.cursor()
@@ -180,8 +182,11 @@ def modal_tvshow():
 def drama_sort():
     sort = request.form['sort']
     print(sort)
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    login_id=request.cookies.get('id')
+    login_nickname=request.cookies.get('nickname')
+    login_num=request.cookies.get('num')
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute("SELECT * FROM rating;")
@@ -205,8 +210,8 @@ def drama_sort():
        db_cursor.execute("select img.poster_image from rating rt join image img on rt.id=img.id where rt.movie_or_drama='drama'order by rating desc;")
        drama_poster_img = db_cursor.fetchall()
     
-    return redirect(url_for('tvshows',all=all_rating, dramas=dramas, drama_poster_img=drama_poster_img))
-    #return render_template('tvshows.html', all=all_rating, dramas=dramas, drama_poster_img=drama_poster_img,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
+    #return redirect(url_for('tvshows',all=all_rating, dramas=dramas, drama_poster_img=drama_poster_img))
+    return render_template('tvshows.html', all=all_rating, dramas=dramas, drama_poster_img=drama_poster_img,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
 
 @app.route('/videos.html')
 def videos():
@@ -214,8 +219,8 @@ def videos():
     login_nickname=request.cookies.get('nickname')
     login_num=request.cookies.get('num')
 
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
 
@@ -233,8 +238,8 @@ def modal_videos():
    
     data1="SELECT rt.name, rt.rating,date_format(rt.date,'%M %D, %Y') as date, img.poster_image,img.background_image,vd.video_title,vd.video_link FROM rating rt join image img on rt.id=img.id join video vd on img.id=vd.id where name='"+data+"';"
     
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     with db_all_rating:
         db_cursor = db_all_rating.cursor()
@@ -252,9 +257,11 @@ def modal_videos():
 @app.route('/videos.html/sort', methods=['POST'])
 def video_sort():
     sort = request.form['sort']
-
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    login_id=request.cookies.get('id')
+    login_nickname=request.cookies.get('nickname')
+    login_num=request.cookies.get('num')
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute("SELECT * FROM rating;")
@@ -271,8 +278,8 @@ def video_sort():
     else: #평점순으로 정렬
        db_cursor.execute("select * from video vd join rating rt on vd.id=rt.id order by rt.rating desc;")
        videos = db_cursor.fetchall()
-    return redirect(url_for('videos',all=all_rating,videos=videos))
-    #return render_template('videos.html', all=all_rating,videos=videos,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
+    #return redirect(url_for('videos',all=all_rating,videos=videos))
+    return render_template('videos.html', all=all_rating,videos=videos,login_id=login_id,login_nickname=login_nickname,login_num=login_num,)
 
 @app.route('/login.html')
 def login():
@@ -286,8 +293,8 @@ def login1():
 
     data="select * from users where id='"+id+"' and password='"+password+"';"
     print(data)
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute(data)
@@ -320,8 +327,8 @@ def signup1():
     nickname = request.form.get('nickname')
     data="select count(id) from users where id='"+id+"' ""or nickname='"+nickname+"';"
     
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-                password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
                 autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute(data)
@@ -342,8 +349,8 @@ def signup1():
 def search():
     data=request.get_json()['data']
 
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
 
     with db_all_rating:
@@ -363,8 +370,8 @@ def write():
     movie_name = data['movie_name']
     login_num=request.cookies.get('num')
 
-    db_all_rating = pymysql.connect(host='localhost', user='root',
-            password='1234', database='myweb3',
+    db_all_rating = pymysql.connect(host='movieranking.cbuy8ky42oy8.us-east-1.rds.amazonaws.com', user='root',
+            password='574152657', database='movieranking',
             autocommit=True, cursorclass=pymysql.cursors.DictCursor)
     db_cursor = db_all_rating.cursor()
     db_cursor.execute("select * from rating where name='"+movie_name+"';")
@@ -376,4 +383,4 @@ def write():
     
     return jsonify({'review':review})
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=5001)
+    app.run(host='0.0.0.0',port=5001,debug=True)
